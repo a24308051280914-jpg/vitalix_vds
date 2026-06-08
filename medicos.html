@@ -24,7 +24,6 @@
         .tabla-registros td { padding: 12px 10px; border-bottom: 1px solid #e2e8f0; color: #334155; }
         .tabla-registros tr:hover { background-color: #f8fafc; }
 
-        /* ESTILOS PARA LOS BOTONES DEL CRUD */
         .contenedor-acciones { display: flex; gap: 6px; }
         .btn-accion { padding: 5px 10px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .btn-editar { background-color: #f59e0b; color: white; }
@@ -76,9 +75,10 @@
                             <th>Cédula</th>
                             <th>Consultorio</th>
                             <th>Horario</th>
-                            <th>Acciones</th> </tr>
+                            <th>Acciones</th>
+                        </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cuerpoTabla">
                         <tr>
                             <td>MED-01</td>
                             <td>Dr. Alejandro Martínez</td>
@@ -89,8 +89,8 @@
                             <td>08:00 a 14:00</td>
                             <td>
                                 <div class="contenedor-acciones">
-                                    <button class="btn-accion btn-editar">Editar</button>
-                                    <button class="btn-accion btn-eliminar">Eliminar</button>
+                                    <button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button>
+                                    <button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button>
                                 </div>
                             </td>
                         </tr>
@@ -99,27 +99,5 @@
             </div>
 
             <div class="tarjeta-formulario">
-                <h2>Registro de Médicos</h2>
-                <p>Ingrese la información del especialista.</p>
-                <form onsubmit="return false;">
-                    <div class="grupo-formulario"><label>ID Médico</label><input type="text" placeholder="Ej: MED-01"></div>
-                    <div class="grupo-formulario"><label>Nombre Completo</label><input type="text" placeholder="Nombre del médico"></div>
-                    <div class="grupo-formulario"><label>Especialidad</label><input type="text" placeholder="Ej: Cardiología"></div>
-                    <div class="grupo-formulario"><label>Teléfono</label><input type="text" placeholder="Ej: 656-123-4567"></div>
-                    <div class="grupo-formulario"><label>Cédula Profesional</label><input type="text" placeholder="Número de cédula"></div>
-                    <div class="grupo-formulario"><label>Fecha de Nacimiento</label><input type="date"></div>
-                    <div class="grupo-formulario"><label>CURP</label><input type="text" placeholder="18 caracteres"></div>
-                    <div class="grupo-formulario"><label>Consultorio</label><input type="text" placeholder="Ej: 101"></div>
-                    <div class="grupo-formulario"><label>Horario</label><input type="text" placeholder="Ej: 08:00 a 14:00"></div>
-                    <button class="btn-guardar">Registrar Médico</button>
-                </form>
-            </div>
-        </main>
-    </div>
-    <footer>
-        <p><strong>Estudiante:</strong> Villa Diaz Sofia</p>
-        <p><strong>No. control:</strong> 24308051280914 | <strong>Semestre:</strong> 4to (4°J)</p>
-        <p><strong>Especialidad:</strong> Programación</p>
-    </footer>
-</body>
-</html>
+                <h2 id="tituloFormulario">Registro de Médicos</h2>
+                <p id="subtituloFormulario">Ingrese la información del especialista.</p>
