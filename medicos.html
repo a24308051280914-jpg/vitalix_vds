@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Vitalix - Médicos</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f6fa; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { display: flex; align-items: center; gap: 15px; background-color: #0056b3; color: white; padding: 15px 30px; position: fixed; top: 0; left: 0; right: 0; height: 40px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo-simulado { background: white; color: #0056b3; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
+        header h1 { margin: 0; font-size: 24px; }
+        .contenedor-dashboard { display: flex; margin-top: 70px; flex: 1; }
+        nav { width: 240px; background-color: #2c3e50; padding: 20px 10px; display: flex; flex-direction: column; gap: 8px; position: fixed; top: 70px; bottom: 60px; left: 0; overflow-y: auto; }
+        .titulo-sidebar { color: #8a99a8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; padding-left: 10px; margin-bottom: 5px; }
+        nav a { color: #cbd5e1; text-decoration: none; padding: 12px 15px; font-weight: bold; border-radius: 6px; font-size: 14px; transition: all 0.2s ease; }
+        nav a:hover { background-color: #34495e; color: white; padding-left: 20px; }
+        .activo { background-color: #0056b3; color: white; }
+        
+        main { flex: 1; padding: 30px; margin-left: 260px; margin-bottom: 60px; display: grid; grid-template-columns: 1fr 380px; gap: 30px; align-items: start; }
+        
+        .contenedor-tabla { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #2c3e50; box-sizing: border-box; width: 100%; }
+        .contenedor-tabla h3 { color: #2c3e50; margin-top: 0; font-size: 18px; margin-bottom: 15px; }
+        .tabla-registros { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .tabla-registros th { background-color: #f1f5f9; color: #4a5568; padding: 12px 10px; font-weight: 600; border-bottom: 2px solid #cbd5e1; }
+        .tabla-registros td { padding: 12px 10px; border-bottom: 1px solid #e2e8f0; color: #334155; }
+        .tabla-registros tr:hover { background-color: #f8fafc; }
+
+        /* ESTILOS PARA LOS BOTONES DEL CRUD */
+        .contenedor-acciones { display: flex; gap: 6px; }
+        .btn-accion { padding: 5px 10px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-editar { background-color: #f59e0b; color: white; }
+        .btn-editar:hover { background-color: #d97706; }
+        .btn-eliminar { background-color: #ef4444; color: white; }
+        .btn-eliminar:hover { background-color: #dc2626; }
+
+        .tarjeta-formulario { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #0056b3; box-sizing: border-box; width: 100%; }
+        .tarjeta-formulario h2 { color: #2c3e50; margin-top: 0; font-size: 22px; margin-bottom: 5px; }
+        .tarjeta-formulario p { color: #64748b; font-size: 13px; margin-bottom: 20px; }
+        
+        .grupo-formulario { margin-bottom: 12px; }
+        .grupo-formulario label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 600; color: #4a5568; }
+        .grupo-formulario input { width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; background-color: #f8fafc; }
+        .grupo-formulario input:focus { border-color: #0056b3; outline: none; background-color: #fff; }
+        
+        .btn-guardar { width: 100%; background: #0056b3; color: white; border: none; padding: 11px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; margin-top: 10px; transition: background 0.2s; }
+        .btn-guardar:hover { background: #004494; }
+
+        footer { background: #1a252f; color: white; padding: 15px; text-align: center; position: fixed; bottom: 0; left: 0; right: 0; height: 30px; z-index: 1000; display: flex; justify-content: space-around; align-items: center; font-size: 13px; }
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+    <header><div class="logo-simulado">+</div><h1>Hospital Vitalix</h1></header>
+    <div class="contenedor-dashboard">
+        <nav>
+            <div class="titulo-sidebar">Colecciones</div>
+            <a href="index.html">Inicio</a> 
+            <a href="medicos.html" class="activo">Médicos</a>
+            <a href="personal.html">Personal</a>
+            <a href="facturas.html">Facturas</a>
+            <a href="recetas.html">Recetas</a>
+            <a href="pacientes.html">Pacientes</a>
+            <a href="medicamentos.html">Medicamentos</a>
+            <a href="consultorios.html">Consultorios</a>
+            <a href="citas.html">Citas</a>
+        </nav>
+        <main>
+            <div class="contenedor-tabla">
+                <h3>Médicos Registrados</h3>
+                <table class="tabla-registros">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Teléfono</th>
+                            <th>Cédula</th>
+                            <th>Consultorio</th>
+                            <th>Horario</th>
+                            <th>Acciones</th> </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MED-01</td>
+                            <td>Dr. Alejandro Martínez</td>
+                            <td>Cardiología</td>
+                            <td>656-111-2222</td>
+                            <td>GE647382</td>
+                            <td>101</td>
+                            <td>08:00 a 14:00</td>
+                            <td>
+                                <div class="contenedor-acciones">
+                                    <button class="btn-accion btn-editar">Editar</button>
+                                    <button class="btn-accion btn-eliminar">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tarjeta-formulario">
+                <h2>Registro de Médicos</h2>
+                <p>Ingrese la información del especialista.</p>
+                <form onsubmit="return false;">
+                    <div class="grupo-formulario"><label>ID Médico</label><input type="text" placeholder="Ej: MED-01"></div>
+                    <div class="grupo-formulario"><label>Nombre Completo</label><input type="text" placeholder="Nombre del médico"></div>
+                    <div class="grupo-formulario"><label>Especialidad</label><input type="text" placeholder="Ej: Cardiología"></div>
+                    <div class="grupo-formulario"><label>Teléfono</label><input type="text" placeholder="Ej: 656-123-4567"></div>
+                    <div class="grupo-formulario"><label>Cédula Profesional</label><input type="text" placeholder="Número de cédula"></div>
+                    <div class="grupo-formulario"><label>Fecha de Nacimiento</label><input type="date"></div>
+                    <div class="grupo-formulario"><label>CURP</label><input type="text" placeholder="18 caracteres"></div>
+                    <div class="grupo-formulario"><label>Consultorio</label><input type="text" placeholder="Ej: 101"></div>
+                    <div class="grupo-formulario"><label>Horario</label><input type="text" placeholder="Ej: 08:00 a 14:00"></div>
+                    <button class="btn-guardar">Registrar Médico</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p><strong>Estudiante:</strong> Villa Diaz Sofia</p>
+        <p><strong>No. control:</strong> 24308051280914 | <strong>Semestre:</strong> 4to (4°J)</p>
+        <p><strong>Especialidad:</strong> Programación</p>
+    </footer>
+</body>
+</html>
