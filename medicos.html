@@ -17,10 +17,10 @@
         
         .contenedor-tabla { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #2c3e50; width: 100%; box-sizing: border-box; }
         
-        /* ESTILOS DE LA BARRA DE BÚSQUEDA */
+        /* ESTILOS DE LA BARRA DE ACCIONES (BUSCADOR) */
         .bloque-cabecera-tabla { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .bloque-cabecera-tabla h3 { color: #2c3e50; margin: 0; font-size: 18px; }
-        .input-buscar { padding: 8px 15px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 13px; width: 250px; background-color: #f8fafc; outline: none; transition: all 0.2s; }
+        .input-buscar { padding: 8px 15px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 13px; width: 220px; background-color: #f8fafc; outline: none; transition: all 0.2s; }
         .input-buscar:focus { border-color: #0056b3; background-color: #fff; box-shadow: 0 0 5px rgba(0,86,179,0.15); }
 
         .tabla-registros { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
@@ -28,9 +28,11 @@
         .tabla-registros td { padding: 12px 10px; border-bottom: 1px solid #e2e8f0; }
 
         .contenedor-acciones { display: flex; gap: 6px; }
-        .btn-accion { padding: 5px 10px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .btn-accion { padding: 5px 10px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .btn-editar { background-color: #f59e0b; color: white; }
+        .btn-editar:hover { background-color: #d97706; }
         .btn-eliminar { background-color: #ef4444; color: white; }
+        .btn-eliminar:hover { background-color: #dc2626; }
 
         .tarjeta-formulario { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #0056b3; width: 100%; box-sizing: border-box; }
         .grupo-formulario { margin-bottom: 12px; }
@@ -61,10 +63,10 @@
             <div class="contenedor-tabla">
                 <div class="bloque-cabecera-tabla">
                     <h3>Médicos Registrados</h3>
-                    <input type="text" id="inputBuscar" class="input-buscar" onkeyup="buscarMedico()" placeholder="🔍 Buscar por nombre o especialidad...">
+                    <input type="text" id="inputBuscar" class="input-buscar" onkeyup="buscarMedico()" placeholder="🔍 Buscar médico o especialidad...">
                 </div>
                 
-                <table class="tabla-registros" id="tablaMedicos">
+                <table class="tabla-registros">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -136,14 +138,13 @@
     <script>
         let filaEnEdicion = null;
 
-        // --- FUNCIÓN DEL BUSCADOR EN TIEMPO REAL ---
+        // FUNCIÓN FILTRAR / BUSCAR
         function buscarMedico() {
             let filtro = document.getElementById('inputBuscar').value.toLowerCase();
             let tabla = document.getElementById('cuerpoTabla');
             let filas = tabla.getElementsByTagName('tr');
 
             for (let i = 0; i < filas.length; i++) {
-                // Buscamos en la celda del Nombre (celda 1) y de la Especialidad (celda 2)
                 let celdaNombre = filas[i].getElementsByTagName('td')[1];
                 let celdaEspecialidad = filas[i].getElementsByTagName('td')[2];
                 
@@ -151,7 +152,6 @@
                     let textoNombre = celdaNombre.innerText.toLowerCase();
                     let textoEspecialidad = celdaEspecialidad.innerText.toLowerCase();
                     
-                    // Si coincide con el nombre o la especialidad, se muestra; si no, se oculta
                     if (textoNombre.indexOf(filtro) > -1 || textoEspecialidad.indexOf(filtro) > -1) {
                         filas[i].style.display = "";
                     } else {
@@ -161,6 +161,7 @@
             }
         }
 
+        // FUNCIÓN REGISTRAR / ACTUALIZAR
         function guardarMedico() {
             let id = document.getElementById('idMedico').value;
             let nom = document.getElementById('nombre').value;
@@ -211,9 +212,10 @@
             }
 
             document.getElementById('formularioMedico').reset();
-            buscarMedico(); // Re-filtrar por si acaso
+            buscarMedico();
         }
 
+        // FUNCIÓN ELIMINAR
         function eliminarFila(boton) {
             if(confirm("¿Segura que quieres eliminar este registro?")) {
                 let fila = boton.parentElement.parentElement.parentElement;
@@ -221,6 +223,7 @@
             }
         }
 
+        // FUNCIÓN ASIGNAR DATOS PARA EDITAR
         function editarFila(boton) {
             filaEnEdicion = boton.parentElement.parentElement.parentElement;
             let celdas = filaEnEdicion.cells;
