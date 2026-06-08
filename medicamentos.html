@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Vitalix - Medicamentos</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f6fa; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { display: flex; align-items: center; gap: 15px; background-color: #0056b3; color: white; padding: 15px 30px; position: fixed; top: 0; left: 0; right: 0; height: 40px; z-index: 1000; }
+        .logo-simulado { background: white; color: #0056b3; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
+        header h1 { margin: 0; font-size: 24px; }
+        .contenedor-dashboard { display: flex; margin-top: 70px; flex: 1; }
+        nav { width: 240px; background-color: #2c3e50; padding: 20px 10px; display: flex; flex-direction: column; gap: 8px; position: fixed; top: 70px; bottom: 60px; left: 0; }
+        nav a { color: #cbd5e1; text-decoration: none; padding: 12px 15px; font-weight: bold; border-radius: 6px; font-size: 14px; }
+        .activo { background-color: #0056b3; color: white; }
+        main { flex: 1; padding: 30px; margin-left: 260px; margin-bottom: 60px; display: grid; grid-template-columns: 1fr 380px; gap: 30px; align-items: start; }
+        .contenedor-tabla { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #2c3e50; width: 100%; box-sizing: border-box; }
+        .bloque-cabecera-tabla { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .bloque-cabecera-tabla h3 { color: #2c3e50; margin: 0; font-size: 18px; }
+        .input-buscar { padding: 8px 15px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 13px; width: 220px; background-color: #f8fafc; outline: none; }
+        .tabla-registros { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .tabla-registros th { background-color: #f1f5f9; color: #4a5568; padding: 12px 10px; font-weight: 600; border-bottom: 2px solid #cbd5e1; }
+        .tabla-registros td { padding: 12px 10px; border-bottom: 1px solid #e2e8f0; }
+        .contenedor-acciones { display: flex; gap: 6px; }
+        .btn-accion { padding: 5px 10px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .btn-editar { background-color: #f59e0b; color: white; }
+        .btn-eliminar { background-color: #ef4444; color: white; }
+        .tarjeta-formulario { background: white; padding: 25px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #0056b3; width: 100%; box-sizing: border-box; }
+        .grupo-formulario { margin-bottom: 12px; }
+        .grupo-formulario label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 600; }
+        .grupo-formulario input { width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; }
+        .btn-guardar { width: 100%; background: #0056b3; color: white; border: none; padding: 11px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; margin-top: 10px; }
+        footer { background: #1a252f; color: white; padding: 15px; text-align: center; position: fixed; bottom: 0; left: 0; right: 0; height: 30px; display: flex; justify-content: space-around; align-items: center; font-size: 13px; }
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+    <header><div class="logo-simulado">+</div><h1>Hospital Vitalix</h1></header>
+    <div class="contenedor-dashboard">
+        <nav>
+            <a href="index.html">Inicio</a> 
+            <a href="medicos.html">Médicos</a>
+            <a href="personal.html">Personal</a>
+            <a href="facturas.html">Facturas</a>
+            <a href="recetas.html">Recetas</a>
+            <a href="pacientes.html">Pacientes</a>
+            <a href="medicamentos.html" class="activo">Medicamentos</a>
+            <a href="consultorios.html">Consultorios</a>
+            <a href="citas.html">Citas</a>
+        </nav>
+        <main>
+            <div class="contenedor-tabla">
+                <div class="bloque-cabecera-tabla">
+                    <h3>Inventario en Farmacia</h3>
+                    <input type="text" id="inputBuscar" class="input-buscar" onkeyup="buscarMedicamento()" placeholder="🔍 Buscar medicamento...">
+                </div>
+                <table class="tabla-registros">
+                    <thead>
+                        <tr>
+                            <th>ID Producto</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Stock</th>
+                            <th>Unidad</th>
+                            <th>Vencimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+                        <tr>
+                            <td>MED-F01</td>
+                            <td>Paracetamol 500mg</td>
+                            <td>Analgésico</td>
+                            <td>150</td>
+                            <td>Caja</td>
+                            <td>12/2028</td>
+                            <td>
+                                <div class="contenedor-acciones">
+                                    <button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button>
+                                    <button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tarjeta-formulario">
+                <h2 id="tituloFormulario">Alta de Fármacos</h2>
+                <form id="formularioMedicamento">
+                    <div class="grupo-formulario"><label>ID Medicamento</label><input type="text" id="idMedicamento" placeholder="Ej: MED-F01"></div>
+                    <div class="grupo-formulario"><label>Nombre Genérico/Comercial</label><input type="text" id="nombre" placeholder="Nombre genérico"></div>
+                    <div class="grupo-formulario"><label>Categoría</label><input type="text" id="categoria" placeholder="Ej: Antibiótico / Analgésico"></div>
+                    <div class="grupo-formulario"><label>Stock Actual</label><input type="text" id="stock" placeholder="Cantidad"></div>
+                    <div class="grupo-formulario"><label>Unidad de Presentación</label><input type="text" id="unidad" placeholder="Ej: Caja / Frasco"></div>
+                    <div class="grupo-formulario"><label>Fecha Vencimiento</label><input type="text" id="vencimiento" placeholder="MM/AAAA"></div>
+                    <button type="button" class="btn-guardar" id="btnEnviar" onclick="guardarMedicamento()">Registrar Producto</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p><strong>Estudiante:</strong> Villa Diaz Sofia</p>
+        <p><strong>No. control:</strong> 24308051280914 | <strong>Semestre:</strong> 4to (4°J)</p>
+    </footer>
+
+    <script>
+        let filaEnEdicion = null;
+
+        function buscarMedicamento() {
+            let filtro = document.getElementById('inputBuscar').value.toLowerCase();
+            let filas = document.getElementById('cuerpoTabla').getElementsByTagName('tr');
+            for (let i = 0; i < filas.length; i++) {
+                let nom = filas[i].cells[1].innerText.toLowerCase();
+                let cat = filas[i].cells[2].innerText.toLowerCase();
+                filas[i].style.display = (nom.includes(filtro) || cat.includes(filtro)) ? "" : "none";
+            }
+        }
+
+        function guardarMedicamento() {
+            let id = document.getElementById('idMedicamento').value;
+            let nom = document.getElementById('nombre').value;
+            let cat = document.getElementById('categoria').value;
+            let stk = document.getElementById('stock').value;
+            let uni = document.getElementById('unidad').value;
+            let ven = document.getElementById('vencimiento').value;
+
+            if(!id || !nom || !cat || !stk || !uni || !ven){ alert("Llena todos los campos"); return; }
+
+            if (filaEnEdicion === null) {
+                let nuevaFila = document.getElementById('cuerpoTabla').insertRow();
+                nuevaFila.innerHTML = `<td>${id}</td><td>${nom}</td><td>${cat}</td><td>${stk}</td><td>${uni}</td><td>${ven}</td>
+                    <td><div class="contenedor-acciones"><button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button><button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button></div></td>`;
+            } else {
+                let c = filaEnEdicion.cells;
+                c[0].innerText = id; c[1].innerText = nom; c[2].innerText = cat; c[3].innerText = stk; c[4].innerText = uni; c[5].innerText = ven;
+                filaEnEdicion = null;
+                document.getElementById('tituloFormulario').innerText = "Alta de Fármacos";
+                document.getElementById('btnEnviar').innerText = "Registrar Producto";
+                document.getElementById('idMedicamento').disabled = false;
+            }
+            document.getElementById('formularioMedicamento').reset();
+            buscarMedicamento();
+        }
+
+        function eliminarFila(b) { if(confirm("¿Eliminar registro?")) b.closest('tr').remove(); }
+        function editarFila(b) {
+            filaEnEdicion = b.closest('tr'); let c = filaEnEdicion.cells;
+            document.getElementById('idMedicamento').value = c[0].innerText;
+            document.getElementById('nombre').value = c[1].innerText;
+            document.getElementById('categoria').value = c[2].innerText;
+            document.getElementById('stock').value = c[3].innerText;
+            document.getElementById('unidad').value = c[4].innerText;
+            document.getElementById('vencimiento').value = c[5].innerText;
+            document.getElementById('tituloFormulario').innerText = "Modificar Fármaco";
+            document.getElementById('btnEnviar').innerText = "Guardar Cambios";
+            document.getElementById('idMedicamento').disabled = true;
+        }
+    </script>
+</body>
+</html>
